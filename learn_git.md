@@ -1,0 +1,32 @@
+## 简介
+	- git学习笔记。主要基于linux集群环境下运行git，同时与github联动学习代码的团队开发流程。
+- ## git基本概念
+	- git是是目前世界上最先进的分布式版本控制系统。
+		- 1、版本控制系统：记录文件每次修改的版本，方便退回或对比版本差异，同时支持他人协同编辑。
+		- 2、分布式：与集中式版本控制系统相对，每个个人电脑都有完整的版本库，优势之一在于不需要要求联网到中央服务器。
+	-
+-
+-
+- ## 实操流程记录
+	- ### `ssh`生成密钥
+		- 1、在命令行输入：`ssh-keygen -t rsa -b 4096 -C "wenzheng-git"`生成公钥和密钥
+			- ssh-keygen为生成密钥的命令行工具，-t rsa为指定加密方式为rsa，-b 4096指定密钥长度（越长越安全，默认是 2048），-C "wenzheng-git"添加一段注释，用于标识密钥。
+			- ![image.png](../assets/image_1747214815093_0.png)
+		- 在屏幕输出的路径中复制id_rsa.pub文件中的全部内容：/public/home/wenzheng/.ssh/id_rsa.pub
+		- 在github中的ssh密钥中加入上面复制的密钥
+	- ### 安装git
+		- 1、登陆到集群后直接命令行输入：`git`
+		- 2、显示一大串：`usage: git [--version] [--help]...`说明已经安装了git，如果屏幕返回未安装，可以使用`sudo apt install git`等方式安装git
+	-
+	- ### 将repo库git到本地
+		- 1、下载库`git clone git@github.com:WenzhengL/Mattergem_Git_Python_Learning.git`
+			- 首次链接github库可能出现如下警告，是正常情况：
+			- ![image.png](../assets/image_1747214753984_0.png)
+		- 2、对于大的代码库，可以在命令中添加 `--depth 10`，目的是只下载最近十次更新的结果。
+		- 3、同时，对于大的代码库，对于很久远的分支，需要更新子模块`git submodule update --init --recursive`
+		- 4、git status 查看状态,确定一下是否有没有track的子模块
+		- ![image.png](../assets/image_1747215518572_0.png)
+		-
+	- ### 创建新的分支
+		- 创建分支learngit：`git checkout -b learngit`
+		- 将本文件添加到项目目录
