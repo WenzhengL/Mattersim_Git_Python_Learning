@@ -5,7 +5,7 @@
 		- 1、版本控制系统：记录文件每次修改的版本，方便退回或对比版本差异，同时支持他人协同编辑。
 		- 2、分布式：与集中式版本控制系统相对，每个个人电脑都有完整的版本库，优势之一在于不需要要求联网到中央服务器。
 	- 缓存区：
-	-
+- ## PUSH失败时请检查网络
 -
 -
 - ## 用命令行开始学习git
@@ -104,9 +104,14 @@
 		- 查看Git日志：` git log `
 		- ![image.png](/image/image_1747662006490_0.png)
 		-
+		-- push上传时再次遇到报错：fatal: unable to access 'https://github.com/WenzhengL/Mattersim_Git_Python_Learning.git/': Empty reply from server
+		- 尝试git pull，仍报错如下：
+		- git pull origin learngit
+  		error: RPC failed; curl 28 Recv failure: Connection was reset  
+  		fatal: expected flush after ref listing
 		-
-		-
-		-
+	-### 传Git需要一个好梯子！
+		多次更换VPN节点和订阅后成功上传，之前集群的报错也全是网络问题。
 		-
 		- ### 快捷键
 			- 删除注释：`ctrl`+`/`
