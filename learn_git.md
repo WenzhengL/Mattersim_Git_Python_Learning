@@ -16,7 +16,7 @@ git是是目前世界上最先进的分布式版本控制系统。
 ## 问题收集处
  1、json格式文件中不允许出现注释，但是在vscode的setting文件中注释可以正常存在
  2、VScode插件似乎修正了Markdown在预览中的换行规则，在github界面换行失效，部分如图：
- ![alt text](./image/image.png)
+ ![alt text](./image/image.png)  
 	- 策略1：多空一行
 	- 策略2：打2个空格，确保在github界面正常显示
 
