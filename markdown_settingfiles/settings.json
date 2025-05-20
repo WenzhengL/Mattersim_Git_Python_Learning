@@ -1,0 +1,27 @@
+{
+    "workbench.colorTheme": "Default High Contrast Light",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "editor.fontLigatures": false,
+    "editor.mouseWheelZoom": true,
+    "editor.fontSize": 16,
+    "python.analysis.completeFunctionParens": true,
+    "git.enableSmartCommit": true,
+
+    // markdown settings
+    "[markdown]": {
+        "editor.formatOnSave": true,
+        "editor.renderWhitespace": "all",
+        "editor.quickSuggestions": {
+            "other": "on",
+            "comments": "on",
+            "strings": "on"
+        },
+        "editor.acceptSuggestionOnEnter": "on",
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
+
+}
