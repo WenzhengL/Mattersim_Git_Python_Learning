@@ -4,23 +4,91 @@ git学习笔记。主要基于linux集群环境下运行git，同时与github联
 ## git基本概念
 git是是目前世界上最先进的分布式版本控制系统。
 1. 版本控制系统：记录文件每次修改的版本，方便退回或对比版本差异，同时支持他人协同编辑。
-2. 分布式：与集中式版本控制系统相对，每个个人电脑都有完整的版本库，优势之一在于不需要要求联网到中央服务器。
+2. 分布式：与集中式版本控制系统（如SVN和CVS）相对，每个个人电脑都有完整的版本库，优势之一在于不需要要求联网到中央服务器。
 3. git的三大工作区
 	- 工作区 (Working Directory)：你当前在编辑的真实文件所在的位置。`git status` 查看修改状态
 	- 缓存区 (Staging Area)：暂存准备好下一次提交的文件快照（并不是提交）`git add <file>` 添加进缓存区
 	- 本地仓库 (Local Repository)： `.git` 目录下保存的对象数据库，记录历史提交，`git commit` 提交到本地仓库
+	![alt text](/image/image2.png)
+4. 开始git代码管理有两种开始方式，后续操作也从这两类开始介绍：  
+	- 从clone远程仓库开始
+	- 从init本地仓库开始
 
-
+## 注意注意
 ## PUSH失败时请检查网络
+## 切换分支前先交提本地的修改
+
 
 ## 问题收集处
  1、json格式文件中不允许出现注释，但是在vscode的setting文件中注释可以正常存在
  2、VScode插件似乎修正了Markdown在预览中的换行规则，在github界面换行失效，部分如图：
  ![alt text](./image/image.png)  
 	- 策略1：多空一行  
-	- 策略2：打2个空格，确保在github界面正常显示
+	- 策略2：在句子结尾处打2个空格，确保在github界面正常显示
 
-## 用命令行开始学习git
+## git的安装和初始配置
+到git官网下载git并安装,安装配置第一步，查看git文档：[Git - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) 在命令行输入（提前注册好的github账户，这里的用户名似乎不需要一致）：
+```
+$ git config --global user.name "WenzhengL"
+$ git config --global user.email 1849153430@qq.com
+```
+## git基础操作指令
+**查看工作区和暂存区修改的状态**：`git status`，输出如下  
+![alt text](/image/image3.png)  
+**添加工作区内容到暂存区**：`git add xxx`, 添加一个或多个文件到暂存区  
+**交提暂存区到本地仓库**：`git commit -m '注释内容'`，注释内容用以说明交提的修改内容  
+**查看交提日志**：`git log [option]`，以看到commitID，用以回退：  
+![alt text](/image/image4.png)  
+**版本回退**：`git reset --hard commitID`，回退后如何查看已经被删除的记录：`git reflog`，查看commitID后可以退回到该版本  
+**添加文件到忽略列表** 在工作目录中可能存在不希望被track的文件，这是可以创建`.gitignore`文件，可以列出需要忽略的文件模式。下面是一个示例：  
+```
+# no .a files
+*.a
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+# ignore all files in the build/ directory
+build/
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+# ignore all .pdf files in the doc/ directory
+doc/**/*.pdf
+```
+## 分支
+**查看本地分支** `git branch`  
+**创建本地分支** `git branch 分支名`  
+**切换分支** `git checkout 分支名` & 创建并切换到新分支`git checkout -b 分支名`  
+**删除分支** 检查后删除分支：`git branch -d 分支名`，不做检查删除分支`git branch -D b1`。删除都不能删除当前分支，只能删除其他分支  
+
+## 解决冲突
+两个分支对文件的修改可能会存在冲突，例如同时修改了同一文件的相图位置，需要手动解决。步骤如下：  
+1. 处理文件中冲突的地方，选择其中一种，删除其余符号  
+2. 将解决完冲突的文件加入暂存区`add`  
+3. 提交到仓库`commit`  
+
+## 远程仓库
+**添加远程仓库** 先初始化本地仓库后与已创建的远程仓库进行对接，命令：  
+`git remote add <远端名称> <仓库路径>`  
+**远程名称** 远程名称是指向某一个远程仓库的名称，以方便用户在本地仓库与远程仓库间进行交互，默认名称为`origin`，直接clone远程仓库是时会自动创建一个名为`origin`的远程名称。  
+**查看远程仓库** `git remote -v` 查看远程仓库极其对应的URL  
+**修改远程名称** `git remote rename <当前名称> <修改名称>`  
+**删除远程名称** `git remote remove <仓库名称>`  
+**推送到远程仓库**	`git push [-f] [--set-upstream] [远程名称] [本地分支名] [远程分支名]`  
+-f代表强制覆盖，如果远程分支名与本地分支名相图可以指写本地分支名（已经关联的远程分支名也可以不写），--set-upstream表示推送到远程仓库并建立和远程分支的关联  
+**查询本地分支与远程分支的关联** `git branch -vv`  
+
+
+**克隆远程仓库** `git clone <仓库路径> <本地目录>`克隆已经有的远程仓库到本地，本地目录可以省略，会自动创建  
+
+**从远程仓库抓取和拉取** 
+1. 抓取 `git fetch <远程名称> <分支名称>` 抓取指令就是将仓库里的更新都抓取到本地，不会进行合并，如果不指定远程名称和分支名，则抓取所有分支  
+2. 拉取命令 `git pull <远程名称> <分支名称>` 拉取指令就是将远端仓库的修改拉到本地并自动进行合并，等同于fetch+merge。
+fetch命令会创建一个本地的远程跟踪分支，可以用命令`git branch -r`查看  
+
+
+
+## 从clone远程仓库开始
 ### `ssh`生成密钥
 1、在命令行输入：`ssh-keygen -t rsa -b 4096 -C "wenzheng-git"`生成公钥和密钥
 ssh-keygen为生成密钥的命令行工具，-t rsa为指定加密方式为rsa，-b 4096指定密钥长度（越长越安全，默认是 2048），-C "wenzheng-git"添加一段注释，用于标识密钥。
@@ -32,7 +100,7 @@ ssh-keygen为生成密钥的命令行工具，-t rsa为指定加密方式为rsa�
 1、登陆到集群后直接命令行输入：`git`  
 2、显示一大串：`usage: git [--version] [--help]...`说明已经安装了git，如果屏幕返回未安装，可以使用`sudo apt install git`等方式安装git
 
-### 将repo库git到本地
+### 将repo库clone到本地
 1、下载库`git clone git@github.com:WenzhengL/Mattergem_Git_Python_Learning.git`
 首次链接github库可能出现如下警告，是正常情况：  
 ![image.png](/image/image_1747214753984_0.png)  
@@ -67,6 +135,13 @@ push后有显示警告：
 
 **此处省略大量无意义尝试·····最后检查是网络问题**
 
+## 从init本地仓库开始
+从任意的本地文件开始，在命令行输入`git init`，创建成功后可以看到`.git`文件夹
+
+
+
+
+
 ## 尝试VScode+Git+Github
 ### 放弃集群git原因
 1、公共集群连接不稳定，询问管理员后告知集群开始屏蔽网络连接以确保安全  
@@ -100,8 +175,8 @@ python3.12
 ### Git下载和配置
 到git官网下载git并安装,安装配置第一步，查看git文档：[Git - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) 关键命令：
 ```
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com
+$ git config --global user.name "WenzhengL"
+$ git config --global user.email 1849153430@qq.com
 ```
 尝试commit当前文件夹，发现非常卡顿，发现原因在于创建的虚拟环境`venv`处在当前文件中，提交的文件量极大，删除虚拟环境后，重新更改虚拟环境目录到`../venv`中。  
 更改后顺利将在本地创建新repo到github项目`git_demo`  
