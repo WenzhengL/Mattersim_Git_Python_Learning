@@ -170,7 +170,8 @@ python3.12
 "description": "Log output to console"
 }
 ```
-5、虚拟环境配置：`python3.10 -m venv .venv` 根据解释器版本进行虚拟环境创建
+5、虚拟环境配置：`python3.10 -m venv .venv` 根据解释器版本进行虚拟环境创建  
+6、进入虚拟环境：`path\Script\activate`
 
 ### Git下载和配置
 到git官网下载git并安装,安装配置第一步，查看git文档：[Git - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) 关键命令：
@@ -201,4 +202,4 @@ fatal: expected flush after ref listing
 ### VScode快捷键
 删除注释：`ctrl`+`/`
 调出命令输入框：`ctrl`+`shift`+`P`，可以查找文件、更改设置和输入插件命令等
-
+快速唤出命令行：` ctrl+` `
